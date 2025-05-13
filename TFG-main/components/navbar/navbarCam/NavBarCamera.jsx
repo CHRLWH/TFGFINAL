@@ -72,7 +72,7 @@ const NavbarCamera = () => {
       if (!response.ok) throw new Error(`Error del servidor: ${response.status}`);
 
       setLoading(false);
-      Alert.alert("¡Éxito!", "Imagen y ubicación subidas correctamente.");
+      Alert.alert("Imagen Analizada Con Éxito", "La imagen ha sido analizada y guardada.");
     } catch (error) {
       console.error("Error al subir la imagen:", error);
       setLoading(false);

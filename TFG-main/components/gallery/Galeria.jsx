@@ -86,7 +86,6 @@ const GaleriaPrueba = () => {
         ref={scrollViewRef}
         contentContainerStyle={styles.gallery}
       >
-        <Text style={styles.segundoTitulo}>Fotos</Text>
         <View style={styles.row}>
           {filteredImages.length > 0 ? (
             filteredImages.map((item, index) => renderImage(item, index)) // Mostrar imágenes filtradas
@@ -157,14 +156,13 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 40,
     flexDirection: 'row',
-    marginTop: '25%',
+    marginTop: '20%',
     marginLeft: '10%',
     marginRight: '10%',
     width: '40%',
     fontWeight: 'bold',
     color: '#D32F2F',
-    marginTop: '10%',
-    boxShadow: '0px 9px rgb(255, 196, 0)',
+    boxShadow: '10px 10px rgb(255, 196, 0)',
 
   },
   segundoTitulo: {

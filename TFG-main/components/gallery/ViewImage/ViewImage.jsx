@@ -3,6 +3,7 @@ import { Image, StyleSheet, View, Pressable, Text, Dimensions, ScrollView } from
 import Navbar from '../../navbar/Navbar';
 import MapView, { Marker } from 'react-native-maps';
 import { Icon } from 'react-native-elements';
+import AnimatedButton from '../../buttons/AnimatedButton'; // Asegúrate de que la ruta sea correcta
 
 const ViewImage = ({ route, navigation }) => {
   const { image } = route.params;
@@ -74,9 +75,9 @@ const ViewImage = ({ route, navigation }) => {
         )}
 
         <View style={styles.actions}>
-          <Pressable style={styles.boton} onPress={handleDelete}>
+          <AnimatedButton style={styles.boton} onPress={handleDelete}>
             <Text style={styles.botonTexto}>Borrar Imagen</Text>
-          </Pressable>
+          </AnimatedButton>
         </View>
       </ScrollView>
 
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     width: 200,
     elevation: 4,
     marginBottom: 150,
+    boxShadow: '0px 5px rgb(255, 166, 138)',
   },
   botonTexto: {
     color: 'white',

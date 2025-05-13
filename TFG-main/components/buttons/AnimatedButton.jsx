@@ -7,7 +7,7 @@ const AnimatedButton = ({ onPress, children, style }) => {
 
   const handlePressIn = () => {
     Animated.spring(scale, {
-      toValue: 0.5,
+      toValue: 0.9,
       useNativeDriver: true,
     }).start();
   };
