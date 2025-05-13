@@ -130,11 +130,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   mapContainer: {
-    width: '100%',
+    width: '80%',
     height: 200,
     borderRadius: 20,
     overflow: 'hidden',
     marginVertical: 20,
+    alignSelf: 'center',
+    
   },
   map: {
     ...StyleSheet.absoluteFillObject,
