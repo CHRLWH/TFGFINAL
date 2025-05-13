@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     zIndex: -1,
-    marginTop: 0,     // Opcional: esquinas redondeadas
+    marginTop: 0,
   },
   iconRow: {
     flexDirection: 'row',
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
   iconWithText: {
     flexDirection: 'row',
     alignItems: 'center',
+    
   },
   iconText: {
     fontWeight: 'bold',
