@@ -69,18 +69,18 @@ const GaleriaPrueba = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.titulo}>GALERIA</Text>
-      <SearchBar
-    placeholder="Buscar por nombre..."
-    onChangeText={setSearch}
-    value={search}
-    containerStyle={styles.searchBar}
-    inputContainerStyle={styles.searchInput}
-    inputStyle={{ fontSize: 16 }}
-    searchIcon={<Icon name="search" size={24} color="#D32F2F" />}
-    clearIcon={<Icon name="close" size={20} color="#D32F2F" />}
-    lightTheme
-    round
-  />
+         <SearchBar
+  placeholder="Buscar por nombre..."
+  onChangeText={setSearch}
+  value={search}
+  containerStyle={styles.searchBar}
+  inputContainerStyle={styles.searchInput}
+  inputStyle={styles.searchText}
+  searchIcon={<Icon name="search" size={22} color="#000" />}
+  clearIcon={<Icon name="close" size={22} color="#000" />} // mic en lugar de 'close'
+  lightTheme
+  round
+/>
 
       <ScrollView
         ref={scrollViewRef}
@@ -114,10 +114,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   searchBar: {
-    marginTop: '10%',
+    backgroundColor: 'transparent',
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    padding: 0,
+    marginHorizontal: 20,
+    marginTop: 30,
   },
   searchInput: {
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#000',
+    borderRadius: 30,
+    height: 45,
+    paddingHorizontal: 10,
+  },
+  searchText: {
     fontSize: 16,
+    color: '#000',
   },
   gallery: {
     paddingHorizontal: 25,
@@ -132,6 +146,8 @@ const styles = StyleSheet.create({
   image: {
     borderRadius: 15,
     marginBottom: 10,
+    boxShadow: '5px 5px rgb(255, 217, 0)',
+
   },
   footer: {
     width: '100%',
