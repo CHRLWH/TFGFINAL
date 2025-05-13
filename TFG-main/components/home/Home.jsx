@@ -8,15 +8,18 @@ const PaginaPrincipal = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [latestImage, setLatestImage] = useState(null);
+    const [totalCoins, setTotalCoins] = useState(0);
 
   useEffect(() => {
-    // Obtener imágenes desde el backend
     fetch('http://192.168.1.62:3000/get')
       .then((resp) => resp.json())
       .then((imageData) => {
-        console.log('Imágenes recibidas:', imageData);
         setImages(imageData);
-        setLatestImage(imageData.length > 0 ? imageData[imageData.length - 1] : null); // Obtener la última imagen
+        setLatestImage(imageData.length > 0 ? imageData[imageData.length - 1] : null);
+
+        const total = imageData.reduce((sum, img) => sum + (img.valor || 0), 0);
+        setTotalCoins(total);
+
         setLoading(false);
       })
       .catch((error) => {
@@ -29,14 +32,20 @@ const PaginaPrincipal = () => {
     <SafeAreaProvider style={{ width: '100%', height: '100%', flex: 1 }}>
       <View style={styles.curvedTop} />
       <SafeAreaView style={{ flexDirection: 'column', alignItems: 'center' }}>
-        <Text style={styles.welcomeText}>Bienveni@!</Text>
         <View style={styles.iconRow}>
           <View style={styles.iconWithText}>
             <Icon name="images" size={40} color="rgb(255, 254, 249)" />
             <Text style={styles.iconText}> x {images.length}</Text>
           </View>
+          <View style={styles.iconWithText}>
+          <Image
+        source={require('../../assets/LogoCimpaPixelado.png')} // o una URL: { uri: 'https://...' }
+        style={styles.welcomeImage}
+      />
+        </View>
           <View style={styles.userIcon}>
-            <Icon name="person-circle" size={40} color="rgb(255, 255, 255)" />
+            <Icon name="cash" size={40} color="rgb(255, 255, 255)" />
+            <Text style={styles.userIcon}> x {totalCoins}</Text>
           </View>
         </View>
         <Text style={styles.sectionTitle}>Foto más reciente</Text>
@@ -87,17 +96,19 @@ const styles = StyleSheet.create({
     boxShadow: '0px 10px rgb(243, 175, 175)',
 
   },
-  welcomeText: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: 'white',
-    marginTop: 30,    
+  welcomeImage: {
+    height: 100,
+    width: 100,
+    zIndex: -1,
+    marginTop: 0,     // Opcional: esquinas redondeadas
   },
   iconRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '70%',
-    marginVertical: 20,
+    zIndex: 1,
+    marginTop: 10,
+    marginBottom: 45,
   },
   iconWithText: {
     flexDirection: 'row',
@@ -108,8 +119,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
   },
-  userIcon: {
+ userIcon: {
+    flexDirection: 'row',
     alignItems: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
   sectionTitle: {
     fontSize: 30,

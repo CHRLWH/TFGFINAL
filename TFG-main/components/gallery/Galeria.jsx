@@ -11,27 +11,36 @@ const GaleriaPrueba = () => {
   const [search, setSearch] = useState('');
   const navigation = useNavigation();
 
+
   const { width } = Dimensions.get('window');
   const imageSize = (width - 60) / 2;
 
   // Petición fetch para obtener las imágenes e información
   useEffect(() => {
+  const fetchImages = () => {
     fetch('http://192.168.1.62:3000/get', {
       method: 'GET',
     })
       .then((resp) => resp.json())
       .then((imageData) => {
-        console.log('Datos recibidos:', imageData);
-        // Almacenar los datos en el estado images
         setImages(imageData);
       })
       .catch((error) => console.error('Error al obtener datos:', error));
-  }, []);
+  };
+
+  fetchImages(); // Hacer la primera carga
+
+  const interval = setInterval(fetchImages, 10000); // Actualizar cada 10 segundos
+
+  return () => clearInterval(interval); // Limpiar el intervalo cuando el componente se desmonte
+}, []);
 
   // Filtrar los datos según el texto de búsqueda
-  const filteredImages = images.filter(item => 
-    item.image && item.image.toLowerCase().includes(search.toLowerCase()) // Asegurarse de que item.name esté definido
-  );
+ const filteredImages = images.filter(item =>
+  [item.nombre, item.fecha, item.ubicacion].some(field =>
+    typeof field === 'string' && field.toLowerCase().includes(search.toLowerCase())
+  )
+);
 
   const renderImage = (item, index) => {
     const testImage = `http://192.168.1.62:3000/imgs/${item.image}`;
@@ -61,24 +70,18 @@ const GaleriaPrueba = () => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.titulo}>GALERIA</Text>
       <SearchBar
-        placeholder="Buscar..."
-        onChangeText={setSearch}
-        value={search}
-        containerStyle={styles.searchBar}
-        inputContainerStyle={styles.searchInput}
-        inputStyle={{ fontSize: 16 }}
-        searchIcon={<Icon name="search" size={24} color="#D32F2F" />}
-        clearIcon={<Icon name="clear" size={24} color="#D32F2F" />}
-        onClear={() => setSearch('')}
-        onFocus={() => setSearch('')}
-        onBlur={() => setSearch('')}
-        round
-        lightTheme
-        showCancel={false}
-        cancelIcon={<Icon name="cancel" size={24} color="#D32F2F" />}
-        showLoading={false}
-        showIcon={false}
-        showCancelButton={false}/>     
+    placeholder="Buscar por nombre..."
+    onChangeText={setSearch}
+    value={search}
+    containerStyle={styles.searchBar}
+    inputContainerStyle={styles.searchInput}
+    inputStyle={{ fontSize: 16 }}
+    searchIcon={<Icon name="search" size={24} color="#D32F2F" />}
+    clearIcon={<Icon name="close" size={20} color="#D32F2F" />}
+    lightTheme
+    round
+  />
+
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={styles.gallery}

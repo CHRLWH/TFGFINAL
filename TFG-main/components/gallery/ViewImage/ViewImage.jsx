@@ -22,10 +22,10 @@ const ViewImage = ({ route, navigation }) => {
 
       if (response.ok) {
         console.log('Imagen eliminada exitosamente');
-        navigation.goBack();
+        navigation.navigate('Home');
       } else {
         console.log('Error al eliminar la imagen');
-        navigation.goBack();
+        navigation.navigate('Home');
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);

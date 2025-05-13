@@ -86,7 +86,7 @@ const NavbarCamera = () => {
         <Icon name="add-circle" size={45} color="red" />
       </AnimatedButton>
 
-      <LoadingOverlay visible={loading} message="Subiendo imagen..." />
+      <LoadingOverlay visible={loading} message="Analizando Imagen..." />
     </SafeAreaView>
   );
 };
