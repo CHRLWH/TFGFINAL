@@ -49,8 +49,8 @@ const ViewImage = ({ route, navigation }) => {
           </Text>
         </View>
 
-        <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10 }}>
-          {showMap ? 'Ubicación de la imagen' : 'Ubicación no disponible'}
+        <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5 }}>
+          {showMap ?   'Ubicacion 🗺️'  : 'Ubicación no disponible'}
         </Text>
 
         {showMap && (
@@ -105,10 +105,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 5,
+    boxShadow: '10px 10px rgb(243, 175, 175)',
+
   },
   infoContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
     paddingHorizontal: 10,
   },
   title: {
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginVertical: 20,
     alignSelf: 'center',
-    
+    boxShadow: '0px 10px rgb(255, 238, 0)',
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -153,6 +155,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 200,
     elevation: 4,
+    marginBottom: 150,
   },
   botonTexto: {
     color: 'white',
