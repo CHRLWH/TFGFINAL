@@ -48,7 +48,7 @@ const TitleScreen = () => {
 
   return (
     <SafeAreaView style={[styles.container, animatedBackgroundStyle]}>
-      {/* Partículas animadas en el fondo */}
+
       <Svg height="100%" width="100%" style={styles.particlesContainer}>
         {[...Array(20)].map((_, i) => (
           <Circle 

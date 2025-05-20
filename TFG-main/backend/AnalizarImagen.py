@@ -1,5 +1,3 @@
-from Imagen import Imagen
-from Monedas import Monedas
 import os
 
 def setEnvironmentKeys():
@@ -69,13 +67,7 @@ def analizarImagen(url):
     if result.tags is not None:
         for tag in result.tags.list:
             tagsEnLaImagen.append(tag.name)
-       #     tagsEnLaImagen.append(tag.confidence)
 
-    #Almaceno los resultados en el array tags de imagen y lo muestro
-    #print("Objetos de la imagen y su nivel de confianza de exactitud:")
-    #print(tagsEnLaImagen)
-    #print("Analisis de la imagen de forma general:")
-    #print(result.caption)
     os.system('python bdConnection/bdConnect.py')
     return tagsEnLaImagen
 

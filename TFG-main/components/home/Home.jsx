@@ -8,7 +8,7 @@ const PaginaPrincipal = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [latestImage, setLatestImage] = useState(null);
-    const [totalCoins, setTotalCoins] = useState(0);
+  const [totalCoins, setTotalCoins] = useState(0);
 
   useEffect(() => {
     fetch('http://192.168.1.62:3000/get')
@@ -16,10 +16,8 @@ const PaginaPrincipal = () => {
       .then((imageData) => {
         setImages(imageData);
         setLatestImage(imageData.length > 0 ? imageData[imageData.length - 1] : null);
-
         const total = imageData.reduce((sum, img) => sum + (img.valor || 0), 0);
         setTotalCoins(total);
-
         setLoading(false);
       })
       .catch((error) => {
@@ -39,7 +37,7 @@ const PaginaPrincipal = () => {
           </View>
           <View style={styles.iconWithText}>
           <Image
-        source={require('../../assets/LogoCimpaPixelado.png')} // o una URL: { uri: 'https://...' }
+        source={require('../../assets/LogoCimpaPixelado.png')}
         style={styles.welcomeImage}
       />
         </View>
@@ -50,7 +48,6 @@ const PaginaPrincipal = () => {
         </View>
         <Text style={styles.sectionTitle}>Foto más reciente</Text>
 
-        {/* Pantalla de carga */}
         {loading ? (
           <ActivityIndicator size="large" color="#D32F2F" />
         ) : latestImage ? (
@@ -63,7 +60,6 @@ const PaginaPrincipal = () => {
           <Text style={styles.noImageText}>No hay imágenes disponibles.</Text>
         )}
 
-        {/* Carrusel de imágenes */}
         <Text style={styles.carouselTitle}>Otras imágenes</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.carousel}>
           {images.map((item, index) => (

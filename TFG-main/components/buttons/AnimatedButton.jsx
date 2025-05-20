@@ -1,4 +1,3 @@
-// components/AnimatedButton.js
 import React, { useRef } from 'react';
 import { Pressable, Animated } from 'react-native';
 

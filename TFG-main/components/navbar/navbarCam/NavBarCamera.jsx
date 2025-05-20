@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Alert,
-  Platform,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from "expo-image-picker";
-import * as FileSystem from "expo-file-system";
 import * as Location from "expo-location";
 import LoadingOverlay from "../../pantallaDeCarga/loadingScreen";
 import AnimatedButton from '../../buttons/AnimatedButton';
@@ -24,7 +18,6 @@ const NavbarCamera = () => {
         Alert.alert("Permiso requerido", "Se necesita acceso a la cámara y ubicación.");
         return;
       }
-
       const result = await ImagePicker.launchCameraAsync({
         base64: false,
         quality: 0.7,
@@ -42,8 +35,7 @@ const NavbarCamera = () => {
         await uploadImageToDB(photoUri, coords);
       }
     } catch (error) {
-      console.error("Error al tomar la foto:", error);
-      Alert.alert("Error", "No se pudo tomar la foto.");
+      console.error("Error ", error);
     }
   };
 
@@ -74,9 +66,7 @@ const NavbarCamera = () => {
       setLoading(false);
       Alert.alert("Imagen Analizada Con Éxito", "La imagen ha sido analizada y guardada.");
     } catch (error) {
-      console.error("Error al subir la imagen:", error);
       setLoading(false);
-      Alert.alert("Error", "Hubo un problema al subir la imagen.");
     }
   };
 
@@ -85,7 +75,6 @@ const NavbarCamera = () => {
       <AnimatedButton onPress={takePhoto} style={styles.iconContainer}>
         <Icon name="add-circle" size={45} color="red" />
       </AnimatedButton>
-
       <LoadingOverlay visible={loading} message="Analizando Imagen..." />
     </SafeAreaView>
   );

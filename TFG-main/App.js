@@ -4,16 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Index from './components/titleScreen/TitleScreen';  
 import Home from './components/home/Home';
 import Galeria from './components/gallery/Galeria';  
-import ClassImage from './components/classes/ClassImage';
 import Camera from './components/navbar/navbarCam/CameraComponent';
 import ViewImage from './components/gallery/ViewImage/ViewImage';  
-import { Animated } from 'react-native';
 
 import 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
 
-// ✅ Transición suave sin bordes negros
 const zoomInTransition = {
   cardStyleInterpolator: ({ current }) => {
     const progress = current.progress;
@@ -33,7 +30,7 @@ const zoomInTransition = {
             }),
           },
         ],
-        backgroundColor: '#fff', // Asegúrate que coincida con tu fondo principal
+        backgroundColor: '#fff',
       },
     };
   },
@@ -52,7 +49,6 @@ const App = () => {
         <Stack.Screen name="Index" component={Index} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Galeria" component={Galeria} />
-        <Stack.Screen name="Home2" component={Index} />
         <Stack.Screen name="Camera" component={Camera} />
         <Stack.Screen name="ViewImage" component={ViewImage} />
       </Stack.Navigator>

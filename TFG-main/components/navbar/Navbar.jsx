@@ -23,7 +23,7 @@ const Navbar = () => {
           />
           <NavbarCamera
             isActive={activeTab === 'camera'}
-            onPress={() => setActiveTab('camera')} // no navega, toma foto
+            onPress={() => setActiveTab('camera')}
           />
           <NavbarGallery
             isActive={activeTab === 'gallery'}

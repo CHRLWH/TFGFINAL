@@ -1,14 +1,14 @@
 import React from 'react';
-import { Image, StyleSheet, View, Pressable, Text, Dimensions, ScrollView } from 'react-native';
+import { Image, StyleSheet, View, Text, ScrollView } from 'react-native';
 import Navbar from '../../navbar/Navbar';
 import MapView, { Marker } from 'react-native-maps';
 import { Icon } from 'react-native-elements';
-import AnimatedButton from '../../buttons/AnimatedButton'; // Asegúrate de que la ruta sea correcta
+import AnimatedButton from '../../buttons/AnimatedButton';
 
 const ViewImage = ({ route, navigation }) => {
   const { image } = route.params;
+  const testImage = `http://192.168.1.62:3000/imgs/${image.image}`; 
 
-  const testImage = `http://192.168.1.62:3000/imgs/${image.image}`;
   const latitude = parseFloat(image.latitud);
   const longitude = parseFloat(image.longitud);
 
@@ -22,38 +22,33 @@ const ViewImage = ({ route, navigation }) => {
       });
 
       if (response.ok) {
-        console.log('Imagen eliminada exitosamente');
         navigation.navigate('Home');
       } else {
-        console.log('Error al eliminar la imagen');
         navigation.navigate('Home');
       }
     } catch (error) {
-      console.error('Error en la solicitud:', error);
+      console.error('Error:', error);
     }
   };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
-        <Image
-          source={{ uri: testImage }}
-          style={styles.image}
-        />
-
+        <Image source={{ uri: testImage }} style={styles.image} />
+  
         <View style={styles.infoContainer}>
           <Text style={styles.title}>{image.nombre}</Text>
           <Text style={styles.description}>{image.descripcion}</Text>
           <Text style={styles.date}>{image.fecha}</Text>
           <Text style={styles.points}>
-            <Icon name='paid' /> {image.valor}
+            <Icon name="paid" /> {image.valor}
           </Text>
         </View>
-
+  
         <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5 }}>
-          {showMap ?   'Ubicacion 🗺️'  : 'Ubicación no disponible'}
+          {showMap ? 'Ubicacion 🗺️' : 'Ubicación no disponible'}
         </Text>
-
+  
         {showMap && (
           <View style={styles.mapContainer}>
             <MapView
@@ -73,22 +68,20 @@ const ViewImage = ({ route, navigation }) => {
             </MapView>
           </View>
         )}
-
+  
         <View style={styles.actions}>
           <AnimatedButton style={styles.boton} onPress={handleDelete}>
             <Text style={styles.botonTexto}>Borrar Imagen</Text>
           </AnimatedButton>
         </View>
       </ScrollView>
-
+  
       <View style={styles.footer}>
         <Navbar />
       </View>
     </View>
   );
 };
-
-const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -107,7 +100,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     boxShadow: '10px 10px rgb(243, 175, 175)',
-
   },
   infoContainer: {
     alignItems: 'center',
@@ -148,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   boton: {
-    backgroundColor: "#D32F2F",
+    backgroundColor: '#D32F2F',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 12,

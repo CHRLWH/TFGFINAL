@@ -7,47 +7,47 @@ import { FadeIn } from 'react-native-reanimated';
 import Navbar from '../navbar/Navbar';
 
 const GaleriaPrueba = () => {
-  const [images, setImages] = useState([]); // Estado para almacenar las imágenes
+  const [images, setImages] = useState([]);
   const [search, setSearch] = useState('');
   const navigation = useNavigation();
-
 
   const { width } = Dimensions.get('window');
   const imageSize = (width - 60) / 2;
 
-  // Petición fetch para obtener las imágenes e información
+  // Método que obtiene las imágenes desde el servidor Flask
   useEffect(() => {
-  const fetchImages = () => {
-    fetch('http://192.168.1.62:3000/get', {
-      method: 'GET',
-    })
-      .then((resp) => resp.json())
-      .then((imageData) => {
-        setImages(imageData);
+    const fetchImages = () => {
+      fetch('http://192.168.1.62:3000/get', {
+        method: 'GET',
       })
-      .catch((error) => console.error('Error al obtener datos:', error));
-  };
+        .then((resp) => resp.json())
+        .then((imageData) => {
+          setImages(imageData);
+        })
+        .catch((error) => console.error('Error en obtención de datos', error));
+    };
 
-  fetchImages(); // Hacer la primera carga
+    fetchImages();
 
-  const interval = setInterval(fetchImages, 10000); // Actualizar cada 10 segundos
+    // Se llama cada 10 segundos para hacer refresh
+    const interval = setInterval(fetchImages, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
-  return () => clearInterval(interval); // Limpiar el intervalo cuando el componente se desmonte
-}, []);
+  // Filtro de búsqueda por nombre, fecha y ubicación
+  const filteredImages = images.filter(item =>
+    [item.nombre, item.fecha, item.ubicacion].some(field =>
+      typeof field === 'string' && field.toLowerCase().includes(search.toLowerCase())
+    )
+  );
 
-  // Filtrar los datos según el texto de búsqueda
- const filteredImages = images.filter(item =>
-  [item.nombre, item.fecha, item.ubicacion].some(field =>
-    typeof field === 'string' && field.toLowerCase().includes(search.toLowerCase())
-  )
-);
-
+  // Render de cada imagen en la galería
   const renderImage = (item, index) => {
     const testImage = `http://192.168.1.62:3000/imgs/${item.image}`;
     return (
       <Pressable
         key={item.id}
-        onPress={() => navigation.navigate('ViewImage', { image: item })} // Navegar a la pantalla de ViewImage con la imagen
+        onPress={() => navigation.navigate('ViewImage', { image: item })}
       >
         <Animated.Image
           entering={FadeIn.delay(100 * index).duration(800)}
@@ -59,9 +59,8 @@ const GaleriaPrueba = () => {
     );
   };
 
-  const scrollViewRef = React.createRef(); // Referencia al ScrollView
+  const scrollViewRef = React.createRef();
 
-  // Función para hacer scroll al principio
   const scrollToTop = () => {
     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
   };
@@ -69,33 +68,30 @@ const GaleriaPrueba = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.titulo}>GALERIA</Text>
-         <SearchBar
-  placeholder="Buscar por nombre..."
-  onChangeText={setSearch}
-  value={search}
-  containerStyle={styles.searchBar}
-  inputContainerStyle={styles.searchInput}
-  inputStyle={styles.searchText}
-  searchIcon={<Icon name="search" size={22} color="#000" />}
-  clearIcon={<Icon name="close" size={22} color="#000" />} // mic en lugar de 'close'
-  lightTheme
-  round
-/>
 
-      <ScrollView
-        ref={scrollViewRef}
-        contentContainerStyle={styles.gallery}
-      >
+      <SearchBar
+        placeholder="Buscar por nombre..."
+        onChangeText={setSearch}
+        value={search}
+        containerStyle={styles.searchBar}
+        inputContainerStyle={styles.searchInput}
+        inputStyle={styles.searchText}
+        searchIcon={<Icon name="search" size={22} color="#000" />}
+        clearIcon={<Icon name="close" size={22} color="#000" />}
+        lightTheme
+        round
+      />
+
+      <ScrollView ref={scrollViewRef} contentContainerStyle={styles.gallery}>
         <View style={styles.row}>
           {filteredImages.length > 0 ? (
-            filteredImages.map((item, index) => renderImage(item, index)) // Mostrar imágenes filtradas
+            filteredImages.map((item, index) => renderImage(item, index))
           ) : (
-            <Text style={styles.noResults}>No se encontraron resultados</Text> // Mensaje si no hay resultados
+            <Text style={styles.noResults}>No se encontraron resultados</Text>
           )}
         </View>
       </ScrollView>
 
-      {/* Botón flotante para volver al inicio */}
       <Pressable style={styles.floatingButton} onPress={scrollToTop}>
         <FontAwesome name="arrow-up" size={24} color="white" />
       </Pressable>
@@ -135,7 +131,7 @@ const styles = StyleSheet.create({
   gallery: {
     paddingHorizontal: 25,
     paddingTop: 50,
-    paddingBottom: 100, // para dejar espacio al navbar fijo
+    paddingBottom: 100,
   },
   row: {
     flexDirection: 'row',
@@ -145,8 +141,7 @@ const styles = StyleSheet.create({
   image: {
     borderRadius: 15,
     marginBottom: 10,
-    boxShadow: '5px 5px rgb(255, 217, 0)',
-
+    boxShadow: '5px 5px rgb(255, 217, 0)', // ⚠️ Esto no es válido en React Native
   },
   footer: {
     width: '100%',
@@ -162,8 +157,7 @@ const styles = StyleSheet.create({
     width: '40%',
     fontWeight: 'bold',
     color: '#D32F2F',
-    boxShadow: '10px 10px rgb(255, 196, 0)',
-
+    boxShadow: '10px 10px rgb(255, 196, 0)', // ⚠️ No válido en React Native
   },
   segundoTitulo: {
     fontSize: 30,
@@ -180,12 +174,12 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 200, // Ajusta la posición vertical del botón flotante
-    right: 25, // Ajusta la posición horizontal del botón flotante
-    backgroundColor: '#D32F2F', // Color de fondo del botón
-    borderRadius: 50, // Forma circular
-    padding: 15, // Espaciado del ícono
-    shadowColor: '#000', // Sombra
+    bottom: 200,
+    right: 25,
+    backgroundColor: '#D32F2F',
+    borderRadius: 50,
+    padding: 15,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
