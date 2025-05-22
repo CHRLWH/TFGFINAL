@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Index from './components/titleScreen/TitleScreen';  
 import Home from './components/home/Home';
 import Galeria from './components/gallery/Galeria';  
-import Camera from './components/navbar/navbarCam/CameraComponent';
+import Camera from './components/navbar/navbarCam/NavBarCamera';
 import ViewImage from './components/gallery/ViewImage/ViewImage';  
 
 import 'react-native-gesture-handler';
