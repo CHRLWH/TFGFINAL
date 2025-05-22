@@ -6,8 +6,7 @@ from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
-from AnalizarImagen import analizarImagen
-
+from ..AnalizarImagen import analizarImagen
 app = Flask(__name__)
 CORS(app)
 
