@@ -1,7 +1,0 @@
-Flask
-Flask-SQLAlchemy
-Flask-Marshmallow
-marshmallow-sqlalchemy
-Flask-Cors
-Werkzeug
-mysqlclient
