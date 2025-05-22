@@ -1,3 +1,5 @@
+from Imagen import Imagen
+from Monedas import Monedas
 import os
 
 def setEnvironmentKeys():
@@ -8,7 +10,7 @@ def setEnvironmentKeys():
 
 def analizarImagen(url):
     import os
-
+    from deep_translator import GoogleTranslator
     from azure.ai.vision.imageanalysis import ImageAnalysisClient
     from azure.ai.vision.imageanalysis.models import VisualFeatures
     from azure.core.credentials import AzureKeyCredential
@@ -62,18 +64,39 @@ def analizarImagen(url):
             VisualFeatures.CAPTION
         ]
     )
-
     tagsEnLaImagen = []
-    if result.tags is not None:
+    tag_mas_probable = ""
+    mayor_confianza = 0
+    palabras_clave = ["arbol", "bus stop", "trash can"]
+    if result.tags:
         for tag in result.tags.list:
             tagsEnLaImagen.append(tag.name)
+            if tag.name == "tree" or tag.name == "trash can" or tag.name == "bus stop":
+                print(tag.name)
+                mayor_confianza = tag.confidence
+                tag_mas_probable = tag.name
 
-    os.system('python bdConnection/bdConnect.py')
-    return tagsEnLaImagen
+    caption_texto = result.caption['text'] if result.caption else "Sin descripción"
+    palabras_clave = ["arbol", "bus stop", "trash can", "dog", "bird"]
+
+
+    for palabra in palabras_clave:
+        if palabra in caption_texto:
+            tag_mas_probable = palabra
+            break
+
+    traducido =  GoogleTranslator(source='auto', target='es').translate(tag_mas_probable)
+    caption_traducida = GoogleTranslator(source='auto', target='es').translate(caption_texto)
+    print(traducido)
+    print(caption_traducida)
+    return traducido, caption_traducida
 
 #Funcion que ejecuta el programa principal
 def guardarImagen():
     objeto = analizarImagen("imgs/Marquesina2.jpg")
+
+    for objeto in objeto:
+        print(objeto)
 
     for objeto in objeto:
         print(objeto)
