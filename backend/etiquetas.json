@@ -1,0 +1,32 @@
+{
+  "etiquetas": [
+    {
+      "id": 1,
+      "etiqueta": "parque"
+    },
+    {
+      "id": 2,
+      "etiqueta": "arbol"
+    },
+    {
+      "id": 3,
+      "etiqueta": "basura"
+    },
+    {
+      "id": 4,
+      "etiqueta": "botella"
+    },
+    {
+      "id": 5,
+      "etiqueta": "envoltorio"
+    },
+    {
+      "id": 6,
+      "etiqueta": "parada de bus"
+    },
+    {
+      "id": 7,
+      "etiqueta": "residuo"
+    }
+  ]
+}
